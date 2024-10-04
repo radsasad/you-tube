@@ -1,3 +1,12 @@
+const getTime = (time) =>{
+    const hour = parseInt(time / 3600)
+    let remainingSecond = time % 3600 ;
+    const minute = parseInt(remainingSecond / 60);
+    remainingSecond = remainingSecond % 60;
+    return `${hour} h ${minute} m ${remainingSecond} s ago`
+    
+}
+
 const loadCategory = async () => {
     const url = "https://openapi.programming-hero.com/api/phero-tube/categories";
     const res = await fetch(url);
@@ -21,12 +30,23 @@ const displayVideos = (videos) => {
          <figure class="">
            <img class="h-[160px] w-full rounded-md object-cover" src=${video.thumbnail}  alt="Shoes" class="rounded-xl" />
           </figure>
-          <div class="">
-             <h2 class="card-title">Shoes!</h2>
-             <p>If a dog chews shoes whose shoes does he choose?</p>
-             <div class="card-actions">
-              <button class="btn btn-primary">Buy Now</button>
-            </div>
+          <div class="flex justify-start gap-2 py-3">
+             <div>
+              <img class="w-10 h-10 rounded-full object-cover" src=${video.authors[0].profile_picture} alt="" srcset="" />
+             </div>
+             <div>
+               <h2 class="text-base font-semibold text-gray-600">${video.title}</h2>
+               <div class="flex  items-center gap-2">
+                <p class="text-gray-500 font-bold text-xs text-left">${video.authors[0].profile_name}</p>
+                ${
+                    video.authors[0].verified == true?  `<img class="w-5 h-5" src="https://img.icons8.com/?size=48&id=63262&format=png" alt="" srcset="" />`: ""
+                }
+                
+               </div>
+               <p class="text-gray-500 font-semibold text-sm text-left"> ${video.others.views} views ${video.others.posted_date?.length == 0? '': `<span>${getTime(video.others.posted_date)}</span>`} </p>
+               <button class="bg-zinc-100 px-3 mt-1 font-semibold rounded-lg hover:bg-zinc-300   ">play Now</button>
+             </div>             
+         </div>
         </div>
 
         `
