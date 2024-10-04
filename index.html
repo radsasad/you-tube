@@ -1,0 +1,57 @@
+
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>you tube</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.11/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <header class="m-auto max-w-7xl">
+        <nav class="flex items-center justify-between h-12 lg:px-10">
+            <div>
+                <img src="assets/Logo.png" alt="" srcset="">
+            </div>
+            <div>
+                <input id="search-input" class="px-3 py-1 border border-slate-400 rounded-3xl w-96" placeholder="search" type="search"
+                    name="" id="">
+            </div>
+            <div>
+                <button class="px-4 py-1 font-semibold border border-slate-200 rounded-3xl text-sky-500"
+                    type="button">short</button>
+            </div>
+        </nav>
+        <div class="flex items-center justify-center mt-2">
+            <div class="flex gap-3" id="category-items">
+
+            </div>
+        </div>
+    </header>
+    <main class="m-auto max-w-7xl">
+        <section id="videos-container"
+            class="grid w-11/12 grid-cols-1 gap-5 py-5 mx-auto md:grid-cols-2 lg:grid-cols-4">
+
+        </section>
+    </main>
+    <!-- You can open the modal using ID.showModal() method -->
+    
+    <dialog id="customModal" class="modal">
+        <div class="modal-box">
+            <form method="dialog">
+                <button class="absolute bg-slate-100 btn btn-sm btn-circle btn-ghost right-2 top-2">✕</button>
+            </form>
+            <div id="modal-container">
+                <h3 class="text-lg font-bold">Hello!</h3>
+            <p class="py-4">Press ESC key or click on ✕ button to close</p>
+            </div>
+        </div>
+    </dialog>
+    
+</body>
+
+</html>
