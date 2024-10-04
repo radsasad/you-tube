@@ -20,10 +20,30 @@ const loadVideos = async () => {
     displayVideos(data.videos)
 }
 
+const loadCategoriesVideos = async (id) =>{
+    const url = `https://openapi.programming-hero.com/api/phero-tube/category/${id}`;
+    const res = await fetch(url)
+    const data = await res.json()
+    displayVideos(data.category)
+}
 const displayVideos = (videos) => {
     const videosContainer = document.getElementById('videos-container');
+    videosContainer.innerHTML = "";
+   if(videos.length == 0){
+    videosContainer.classList.remove('grid')
+    videosContainer.innerHTML = `
+     <div class="h-98 mt-10 flex flex-col gap-10 justify-center items-center">
+      <img src="assets/icon.png" alt="" srcset="" />
+      <h1 class="text-xl">no video is available now!!!!!!!</h1>
+     </div>
+    `;
+    return;
+   }else{
+    videosContainer.classList.add('grid')
+   }
+
     videos.forEach((video) => {
-        console.log(video)
+       
         const card = document.createElement('div');
         card.innerHTML = `
             
@@ -44,7 +64,7 @@ const displayVideos = (videos) => {
                 
                </div>
                <p class="text-gray-500 font-semibold text-sm text-left"> ${video.others.views} views ${video.others.posted_date?.length == 0? '': `<span>${getTime(video.others.posted_date)}</span>`} </p>
-               <button class="bg-zinc-100 px-3 mt-1 font-semibold rounded-lg hover:bg-zinc-300  text-lime-600 ">play Now</button>
+               <button class="bg-zinc-100 px-3 mt-1 font-semibold rounded-lg hover:bg-zinc-300  text-amber-950 ">play Now</button>
              </div>             
          </div>
         </div>
@@ -61,7 +81,7 @@ const displayCategories = (categories) => {
         // console.log(item)
         const div = document.createElement('div')
         div.innerHTML = `
-        <button class="btn" type="button">${item.category}</button>
+        <button onclick="loadCategoriesVideos(${item.category_id})" class="btn" type="button">${item.category}</button>
        `
         categoryItems.append(div)
     });
