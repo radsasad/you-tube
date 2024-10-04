@@ -6,11 +6,17 @@ const getTime = (time) => {
     return `${hour} h ${minute} m ${remainingSecond} s ago`
 
 }
-const removeActiveClass = () =>{
+const removeActiveClass = () => {
     const buttons = document.getElementsByClassName('category-btn')
-    for(let btn of buttons){
+    for (let btn of buttons) {
         btn.classList.remove('active')
     }
+}
+const loadDetails = async (videoId) => {
+    console.log(videoId)
+    const res = await fetch(`https://openapi.programming-hero.com/api/phero-tube/video/${videoId}`)
+    const data = await res.json()
+    displayDetails (data.video) 
 }
 const loadCategory = async () => {
     const url = "https://openapi.programming-hero.com/api/phero-tube/categories";
@@ -18,8 +24,8 @@ const loadCategory = async () => {
     const data = await res.json()
     displayCategories(data.categories)
 }
-const loadVideos = async () => {
-    const url = `https://openapi.programming-hero.com/api/phero-tube/videos`;
+const loadVideos = async (searchText = "") => {
+    const url = `https://openapi.programming-hero.com/api/phero-tube/videos?title=${searchText}`;
     const res = await fetch(url)
     const data = await res.json()
     displayVideos(data.videos)
@@ -38,6 +44,16 @@ const loadCategoriesVideos = async (id) => {
         .catch(error => console.log(error))
 
 
+}
+
+const displayDetails = (video) =>{
+    const detailsContainer = document.getElementById('modal-container')
+    detailsContainer.innerHTML =`
+        <img class="w-full" src=${video.thumbnail} alt="" srcset="" />
+        <p>${video.description}</p>
+    
+    `
+    document.getElementById('customModal').showModal() 
 }
 const displayVideos = (videos) => {
     const videosContainer = document.getElementById('videos-container');
@@ -76,7 +92,7 @@ const displayVideos = (videos) => {
                 
                </div>
                <p class="text-gray-500 font-semibold text-sm text-left"> ${video.others.views} views ${video.others.posted_date?.length == 0 ? '' : `<span>${getTime(video.others.posted_date)}</span>`} </p>
-               <button class="bg-zinc-100 px-3 mt-1 font-semibold rounded-lg hover:bg-zinc-300  text-amber-950 ">play Now</button>
+               <button  onclick="loadDetails('${video.video_id}')" class="bg-zinc-100 px-3 mt-1 font-semibold rounded-lg hover:bg-zinc-300  text-amber-950 ">play Now</button>
              </div>             
          </div>
         </div>
@@ -98,5 +114,8 @@ const displayCategories = (categories) => {
         categoryItems.append(div)
     });
 }
+document.getElementById('search-input').addEventListener('keyup', (event) => {
+    loadVideos(event.target.value) 
+})
 loadCategory()
 loadVideos()
