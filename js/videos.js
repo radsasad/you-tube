@@ -44,7 +44,7 @@ const displayVideos = (videos) => {
                 
                </div>
                <p class="text-gray-500 font-semibold text-sm text-left"> ${video.others.views} views ${video.others.posted_date?.length == 0? '': `<span>${getTime(video.others.posted_date)}</span>`} </p>
-               <button class="bg-zinc-100 px-3 mt-1 font-semibold rounded-lg hover:bg-zinc-300   ">play Now</button>
+               <button class="bg-zinc-100 px-3 mt-1 font-semibold rounded-lg hover:bg-zinc-300  text-lime-600 ">play Now</button>
              </div>             
          </div>
         </div>
